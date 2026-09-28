@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#08090B" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Nossa História · Matheus & Kelly — SONORA</title>
+    <meta name="description" content="Ouça o álbum Nossa História, de Matheus & Kelly. SONORA Music Experience by Omatheusrec®." />
+
+    <!-- Prévia do link no WhatsApp, Instagram, iMessage etc. -->
+    <meta property="og:type" content="music.album" />
+    <meta property="og:title" content="Nossa História · Matheus & Kelly" />
+    <meta property="og:description" content="Aperte o play. SONORA Music Experience by Omatheusrec®." />
+    <meta property="og:image" content="https://teteuspindola.github.io/sonora-album/cover-512.jpg" />
+    <meta property="og:url" content="https://teteuspindola.github.io/sonora-album/" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="apple-touch-icon" href="cover-512.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@600;700&display=swap"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Iluminação ambiente -->
+    <div class="ambient" aria-hidden="true">
+      <img class="ambient-cover" data-cover alt="" />
+      <div class="glow glow-cyan"></div>
+      <div class="glow glow-amber"></div>
+      <div class="ambient-shade"></div>
+    </div>
+
+    <div class="app">
+      <header class="topbar">
+        <div class="logo">
+          <svg class="wavemark" viewBox="0 0 70 48" aria-hidden="true" data-wavemark></svg>
+          <div class="logo-text">
+            <span class="wordmark">SONOR<svg viewBox="0 0 20 22" aria-hidden="true"><path d="M1.5 21 L10 1.5 L18.5 21" /></svg><span class="sr-only">A</span></span>
+            <span class="tagline">Music Experience</span>
+          </div>
+        </div>
+        <div class="status" id="status"><span class="status-dot"></span><span id="status-text">Pausado</span></div>
+      </header>
+
+      <main class="stage">
+        <!-- Coluna esquerda / tela principal -->
+        <section class="deck" aria-label="Player">
+          <div class="cover-box">
+            <div class="cover" id="cover">
+              <div class="cover-glow" aria-hidden="true"></div>
+              <div class="cover-frame"><img data-cover id="cover-img" alt="" draggable="false" /></div>
+            </div>
+          </div>
+
+          <div class="meta">
+            <div class="kicker"><span id="album-title"></span><span class="sep">/</span><span class="mono" id="track-pos"></span></div>
+            <h1 id="track-title"></h1>
+            <p id="track-artist"></p>
+          </div>
+
+          <div class="viz" id="viz" aria-hidden="true"></div>
+
+          <div class="scrub">
+            <div
+              class="scrubber"
+              id="scrubber"
+              role="slider"
+              tabindex="0"
+              aria-label="Posição da faixa"
+              aria-valuemin="0"
+              aria-valuemax="0"
+              aria-valuenow="0"
+            >
+              <div class="rail"><div class="fill" id="fill"></div></div>
+              <div class="thumb" id="thumb"></div>
+            </div>
+            <div class="times mono">
+              <span id="time-current">0:00</span>
+              <button id="time-total" class="time-toggle" title="Alternar entre duração total e tempo restante">0:00</button>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="btn btn-sm" id="btn-loop" aria-label="Loop do álbum: desligado" title="Loop do álbum">
+              <svg data-icon="repeat"></svg><span class="loop-dot"></span>
+            </button>
+            <div class="transport">
+              <button class="btn btn-md" id="btn-prev" aria-label="Faixa anterior"><svg data-icon="skip-back" class="solid"></svg></button>
+              <button class="btn-play" id="btn-play" aria-label="Tocar"><svg data-icon="play" class="solid"></svg></button>
+              <button class="btn btn-md" id="btn-next" aria-label="Próxima faixa"><svg data-icon="skip-forward" class="solid"></svg></button>
+            </div>
+            <div class="volume">
+              <input type="range" id="volume" min="0" max="1" step="0.01" value="0.85" aria-label="Volume" />
+              <button class="btn btn-sm" id="btn-mute" aria-label="Silenciar"><svg data-icon="volume-2"></svg></button>
+            </div>
+          </div>
+
+          <!-- Só no celular: abre a tracklist -->
+          <button class="next-up" id="btn-open-list" aria-haspopup="dialog" aria-controls="tracklist">
+            <svg data-icon="list-music" class="accent"></svg>
+            <span class="next-up-text">
+              <span class="next-up-label">A seguir</span>
+              <span class="next-up-title" id="next-up-title"></span>
+            </span>
+            <span class="mono next-up-count" id="next-up-count"></span>
+          </button>
+        </section>
+
+        <!-- Coluna direita no desktop / gaveta inferior no celular -->
+        <aside class="tracklist" id="tracklist" aria-label="Lista de faixas">
+          <div class="sheet-grip" id="sheet-grip">
+            <div class="grip-bar"></div>
+            <div class="list-head">
+              <span class="list-label">Tracklist</span>
+              <span class="list-mode" id="list-mode">Em ordem</span>
+            </div>
+            <div class="album-row">
+              <img data-cover class="album-thumb" alt="" />
+              <div class="album-info">
+                <div class="album-name" id="list-album"></div>
+                <div class="album-sub" id="list-sub"></div>
+              </div>
+              <button class="btn btn-sm sheet-close" id="btn-close-list" aria-label="Fechar lista"><svg data-icon="chevron-down"></svg></button>
+            </div>
+          </div>
+          <ol class="tracks" id="tracks"></ol>
+          <div class="list-foot"><span>A seguir:</span> <span id="list-next"></span></div>
+        </aside>
+      </main>
+
+      <footer class="signature-row">
+        <span class="rule"></span>
+        <span class="signature">
+          <span class="by">by</span><svg class="sig-o" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.6" /><circle class="sig-dot" cx="15.6" cy="4.4" r="2.2" /></svg><span class="sr-only">O</span><b>matheus</b><b class="rec">rec</b><sup>®</sup>
+        </span>
+        <span class="rule"></span>
+      </footer>
+    </div>
+
+    <div class="scrim" id="scrim" aria-hidden="true"></div>
+
+    <!-- Aparece só se o navegador bloquear o autoplay -->
+    <div class="welcome" id="welcome" hidden>
+      <img class="welcome-bg" data-cover alt="" />
+      <div class="welcome-inner">
+        <div class="welcome-logo">
+          <svg class="wavemark" viewBox="0 0 70 48" aria-hidden="true" data-wavemark></svg>
+          <span class="wordmark">SONOR<svg viewBox="0 0 20 22" aria-hidden="true"><path d="M1.5 21 L10 1.5 L18.5 21" /></svg><span class="sr-only">A</span></span>
+          <span class="tagline">Music Experience</span>
+        </div>
+        <div class="welcome-album">
+          <img data-cover class="welcome-cover" alt="" />
+          <div class="welcome-title" id="welcome-title"></div>
+          <div class="welcome-sub" id="welcome-sub"></div>
+          <button class="welcome-btn" id="btn-start">
+            <span class="welcome-btn-icon"><svg data-icon="play" class="solid"></svg></span>
+            <span>Ouvir álbum</span>
+          </button>
+        </div>
+        <span class="signature">
+          <span class="by">by</span><svg class="sig-o" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.6" /><circle class="sig-dot" cx="15.6" cy="4.4" r="2.2" /></svg><span class="sr-only">O</span><b>matheus</b><b class="rec">rec</b><sup>®</sup>
+        </span>
+      </div>
+    </div>
+
+    <audio id="audio" preload="auto" playsinline></audio>
+    <script src="app.js"></script>
+  </body>
+</html>
